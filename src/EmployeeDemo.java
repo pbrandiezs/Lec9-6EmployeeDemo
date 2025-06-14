@@ -1,12 +1,28 @@
+import java.util.Random;
+
 public class EmployeeDemo {
+
+    private enum EmployeeType {
+        WORKER,
+        MANAGER
+    }
+
     public static void main(String[] args) {
         Employee[] employees = new Employee[5];
 
-        employees[0] = new Manager("John", "Smith", 28);
-        employees[1] = new Worker("John", "Wick", 53);
-        employees[2] = new Worker("Chuck", "Norris", 70);
-        employees[3] = new Manager("Clint", "Eastwood", 75);
-        employees[4] = new Worker("Sylvestor", "Stalone", 75);
+        for(int i = 0; i < 5; i++) {
+            EmployeeType et = getEmployeeType();
+            Employee currentEmployee;
+
+            if(et == EmployeeType.WORKER) {
+                currentEmployee = new Worker("Will", "Jones", 20);
+            }
+            else {
+                currentEmployee = new Manager("Sam", "Jones", 38);
+            }
+
+            employees[i] = currentEmployee;
+        }
 
         for(Employee employee : employees) {
             System.out.println("Name: " + employee.getFirstName() +
@@ -14,5 +30,22 @@ public class EmployeeDemo {
                     employee.getAge() + " says, " );
             System.out.println("\t" + employee.work() + "\n");
         }
+    }
+
+    public static EmployeeType getEmployeeType() {
+        EmployeeType result;
+
+        Random rand = new Random();
+        final int UPPER_BOUND = 2;
+        int whichOne = rand.nextInt(UPPER_BOUND);
+
+        if(whichOne == 0) {
+            result = EmployeeType.WORKER;
+        }
+        else {
+            result = EmployeeType.MANAGER;
+        }
+
+        return result;
     }
 }
